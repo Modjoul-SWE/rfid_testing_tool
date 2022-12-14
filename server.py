@@ -41,7 +41,6 @@ def search_time():
     
     # Creating proper pre-fix for the s3 iteration
     if request.form['end_time'] < request.form['start_time']:
-        print("redirected because the dates were incorrect")
         return redirect("/")
     else:
         total_dict = []
@@ -55,7 +54,6 @@ def search_time():
                 elif bucket_data != None and bucket == os.getenv("NON_WHITELISTED_BUCKET_NAME"):
                     total_dict.append(bucket_data)
             except:
-                print("In first exception")
                 continue
     if len(total_dict) != 0:
         return render_template('/table.html', total_dict=total_dict)
@@ -103,20 +101,11 @@ def s3_bucket_call(client, bucket, date_time):
                                 for i,j in flat[payload][val].items():
                                     dict_holder[i] = j
                                 continue
-                            dict_holder[k] = v
-                    # print(f"\n{dict_holder}")     
+                            dict_holder[k] = v   
                     temp_dict.append(dict_holder)
                 return temp_dict
     except:
-        print("In second exception")
         return
-        
-def convert_csv(total_dict):
-    csv_name = 'results.csv'
-    with open(csv_name, 'w', encoding='utf-8', newline= '') as output_file:
-        fc = csv.DictWriter(output_file, fieldnames=total_dict[0].keys())
-        fc.writeheader()
-        fc.writerows(total_dict)
 
 
 if __name__ == "__main__":
