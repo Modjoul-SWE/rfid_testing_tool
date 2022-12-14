@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <title>RFID Test Tool</title>
+</head>
+<body>
+    <nav class="navbar navbar-light bg-light">
+        <a class="navbar-brand" href="/">
+          <img src="static/images/modjoul-logo.jpg" width="30" height="30" class="d-inline-block align-top" alt="Modjoul Image">
+          Modjoul RFID Test Tool
+        </a>
+      </nav>
+    <div class="container">
+        <form action="/time"  method='post' class="col-md-6 offset-2 mt-3">
+            <h1>Please select a date and time.</h1>
+            <div class="form-row">
+                <label for="bucket" class="form-label">Please select a S3 Bucket:</label>
+                <select name="bucket" class="mb-3 form-select offset-2">
+                    <option value="n/a" class="selected">Select One</option>
+                    <option value="production" class="form-control">Production</option>
+                    <option value="non-whitelisted" class="form-control">Non-Whitelisted</option>
+                    <option value="garbage" class="form-control" disabled>Garbage</option>
+
+                </select>
+                <label for="tenant" class="form-label">Please select a Tenant:</label>
+                <select name="tenant" class="mb-3 form-select offset-2">
+                    <option value="n/a" class="selected">Select One</option>
+                    <option value="" class="form-control">All</option>
+                    <option value="" class="form-control">Modjoul</option>
+                    <option value="" class="form-control">Amazon</option>
+                    <option value="" class="form-control">Coles</option>
+
+                </select>
+            </div>
+            <div class="row">
+                <label for="date" class="form-label">Date:</label>
+                <input type="date" name="date" id="date" class="form-control">
+            </div>
+            <div class="row mt-2">
+                <label for="start_time" class="form-label">Start Time:</label>
+                <input type="time" name="start_time" id="start_time" class="form-control">
+            </div>
+            <div class="row mt-2">
+                <label for="end_time" class="form-label">End Time:</label>
+                <input type="time" name="end_time" id="end_time" class="form-control">
+            </div>
+            <div class="row">
+                <button class="btn btn-secondary mt-3">Submit</button>
+            </div>
+        </form>
+        </div>
+</body>
+</html>
