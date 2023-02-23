@@ -18,9 +18,17 @@
         <form action="/time"  method='post' class="col-md-6 offset-2 mt-3">
             <h1>Please select a date and time.</h1>
             <div class="form-row">
+                <label for="aws_account" class="form-label">Please select an AWS Account:</label>
+                <select name="aws_account" class="mb-3 form-select offset-2">
+                    <option value="n/a" class="selected" required>Select One</option>
+                    <option value="dev" class="form-control">Dev</option>
+                    <option value="production" class="form-control">Production</option>
+             
+
+                </select>
                 <label for="bucket" class="form-label">Please select a S3 Bucket:</label>
                 <select name="bucket" class="mb-3 form-select offset-2">
-                    <option value="n/a" class="selected">Select One</option>
+                    <option value="n/a" class="selected" required>Select One</option>
                     <option value="production" class="form-control">Production</option>
                     <option value="non-whitelisted" class="form-control">Non-Whitelisted</option>
                     <option value="garbage" class="form-control" disabled>Garbage</option>
@@ -28,7 +36,7 @@
                 </select>
                 <label for="tenant" class="form-label">Please select a Tenant:</label>
                 <select name="tenant" class="mb-3 form-select offset-2">
-                    <option value="n/a" class="selected">Select One</option>
+                    <option value="n/a" class="selected" required>Select One</option>
                     <option value="" class="form-control">All</option>
                     <option value="" class="form-control">Modjoul</option>
                     <option value="" class="form-control">Amazon</option>
@@ -38,15 +46,15 @@
             </div>
             <div class="row">
                 <label for="date" class="form-label">Date:</label>
-                <input type="date" name="date" id="date" class="form-control">
+                <input type="date" name="date" id="date" class="form-control" required>
             </div>
             <div class="row mt-2">
                 <label for="start_time" class="form-label">Start Time:</label>
-                <input type="time" name="start_time" id="start_time" class="form-control">
+                <input type="time" name="start_time" id="start_time" class="form-control" required>
             </div>
             <div class="row mt-2">
                 <label for="end_time" class="form-label">End Time:</label>
-                <input type="time" name="end_time" id="end_time" class="form-control">
+                <input type="time" name="end_time" id="end_time" class="form-control" required>
             </div>
             <div class="row">
                 <button class="btn btn-secondary mt-3">Submit</button>

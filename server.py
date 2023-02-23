@@ -65,8 +65,8 @@ def boto3_info():
     #Creating a low-level functional client
     client = boto3.client(
     's3',
-    aws_access_key_id = os.getenv('AWS_ACCESS_KEY'),
-    aws_secret_access_key = os.getenv('AWS_SECRET_ACCESS_CODE'),
+    aws_access_key_id = os.getenv('AWS_PROD_ACCESS_KEY'),
+    aws_secret_access_key = os.getenv('AWS_PROD_SECRET_ACCESS_CODE'),
     region_name = os.getenv('AWS_REGION')
     )
     
