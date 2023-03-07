@@ -24,22 +24,12 @@
 
     <title>Results</title>
     <style>
-        .test-10 {
-            float: right;
-            /* width: 15%; */
-        }
-        .col-20px{
-            float: none;
-            width: 1.5rem;
-        }
         .custom-table {
             font-size: 13px;
         }
-        .item {
-            display: none;
-        }
-        .item.show{
-            display: block;
+        .search-input {
+            width: 200px;
+            height: 1.5rem;
         }
     </style>
 </head>
@@ -52,11 +42,18 @@
             </a>
         </nav>
         <!-- Potential Search Bar Solution -->
-        <div class="form-group">
-            <label for="search">Search:</label>
-            <input type="text" class="form-control" id="search">
+        <div class="row">
+            <div class="col-auto">
+                <label for="search">Search:</label>
+                
+            </div>
+            <div class="col-sm-3 form-group">
+                <input type="text" class="form-control" id="search">
+            </div>
+            <div class="col-sm-3">
+                <button class="btn btn-default" id="clear">Clear</button>
+            </div>
         </div>
-        <button class="btn btn-default" id="clear">Clear</button>
         <table 
             class="table custom-table" 
             data-toggle="table" 
