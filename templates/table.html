@@ -55,12 +55,11 @@
             </a>
         </nav>
         <!-- Potential Search Bar Solution -->
-        <!-- <div class="d-flex justify-content-end">
-            <form action="/search" method='get' class="form-inline">
-                <input class="form-control mr-sm-2" type="search" placeholder="Search" name="search-bar">
-                <button class="btn btn-outline-success my-0 my-sm-2" type="submit">Search</button>
-            </form>
-        </div> -->
+        <div class="form-group">
+            <label for="search">Search:</label>
+            <input type="text" class="form-control" id="search">
+        </div>
+        <button class="btn btn-default" id="clear">Clear</button>
         <table 
             class="table custom-table" 
             data-toggle="table" 
@@ -78,21 +77,6 @@
                             data-filter-control="input"
                             scope="col"
                             data-search="true">{{key}}
-
-                            <div class="test-10">
-                                <form>
-                                    <select id="filter" class="col-20px form-select">
-                                        <option selected></option>
-                                        {% for row in total_dict %}
-                                            {% set temp = row.get(key) %}
-                                            {% if filter_list.count(temp) == 0 %}
-                                                {% set filter_list = filter_list.append(temp) %}
-                                                <option data-filter-values="{{ temp }}">{{temp}}</option>
-                                            {% endif %}
-                                        {% endfor %}
-                                    </select>
-                                </form>
-                            </div>
                         </th>
                     {% endfor %}
                 </tr>
@@ -108,27 +92,29 @@
             </tbody>
         </table>
 
-        <!-- <script>
-            // Get the dropdown menu and the list of items
-            const filter = document.getElementById('filter');
-            const items = document.querySelectorAll('.item');
+        <script>
+            $(document).ready(function() {
+                // Get the table and rows
+                var table = $('table');
+                var rows = $('tbody tr');
 
-            // Add an event listener to the dropdown menu
-            filter.addEventListener('change', () => {
-                // Get the selected option value
-                const value = filter.value.toLowerCase();
+                // Set up the event listener for the search field
+                $('#search').on('keyup', function() {
+                    var val = $.trim($(this).val()).toLowerCase();
 
-                // Loop through the list of items
-                items.forEach(item => {
-                // If the item's text content contains the selected option value, show it
-                // Otherwise, hide it
-                if (item.textContent.toLowerCase().indexOf(value) > -1) {
-                    item.style.display = 'block';
-                } else {
-                    item.style.display = 'none';
-                }
+                    // Hide all the rows except those that match the search query
+                    rows.show().filter(function() {
+                    var text = $(this).text().toLowerCase();
+                    return !~text.indexOf(val);
+                    }).hide();
                 });
-            });
-        </script> -->
+
+                // Set up the event listener for the clear button
+                $('#clear').on('click', function() {
+                    $('#search').val('');
+                    rows.show();
+                });
+                });
+        </script>
     </body>
 </html>
