@@ -72,7 +72,6 @@ def search_time():
             date_time = date_start + '_' + time
             try:
                 bucket_data = s3_bucket_call(client=client, bucket=bucket, date_time=date_time)
-                print(bucket_data)
                 if bucket_data != None and bucket == os.getenv("PROD_BUCKET_NAME"):
                     total_dict.extend(bucket_data)
                 elif bucket_data != None and bucket == os.getenv("PROD_NON_WHITELISTED_BUCKET_NAME"):
