@@ -15,7 +15,7 @@
             </a>
         </nav>
         <div class="container">
-            <form action="/time"  method='post' class="col-md-6 offset-2 mt-3">
+            <form action="/time"  method='post' class="col-md-6 offset-2 mt-3" onsubmit="return checkTime()">
                 <h1>Please select a date and time.</h1>
                 <div class="form-row">
                     <label for="aws_account" class="form-label">Please select an AWS Account:</label>
@@ -53,9 +53,25 @@
                     <input type="time" name="end_time" id="end_time" class="form-control" required>
                 </div>
                 <div class="row">
-                    <button class="btn btn-secondary mt-3">Submit</button>
+                    <button type="submit" class="btn btn-secondary mt-3">Submit</button>
                 </div>
             </form>
         </div>
+        <script>
+            function checkTime() {
+                // Get the start time from the form
+                var startTime = document.getElementById('start_time').value;
+                // Get the end time from the form
+                var endTime = document.getElementById('end_time').value;
+
+                // Compare the end time to the start time
+                if (endTime < startTime) {
+                    // Display an error message if comparison is true
+                    alert('End time must be after start time.');
+                    return false;
+                }
+                return true;
+            }
+        </script>
     </body>
 </html>

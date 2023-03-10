@@ -88,22 +88,6 @@ def search_time():
         return redirect("/")
 
 
-# Filters data table based on elements within table
-# @app.route('/filter')
-# def dropdown_filter():
-
-#     # Element by which the data will be filtered
-#     dict = request.args.get('dropdown')
-#     key = request.args.get('')
-#     print(dict)
-
-#     # Filter data base on the selected element
-#     if dict:
-#         filtered_dict = [row for row in total_dict if row['']]
-    
-#     return redirect("/")
-
-
 # Establish connection to boto3 client
 # Returns connection to either dev account or production account
 def boto3_info(account):
@@ -139,7 +123,6 @@ def s3_bucket_call(client, bucket, date_time):
                 Bucket=bucket,
                 Key=resp['Key']
                 )
-            # print(file_name)
             file_body = file_name['Body'].read().decode('utf-8')
             my_dict = json.loads(file_body)[0]
             flat = flatdict.FlatDict(my_dict)
@@ -170,7 +153,7 @@ def s3_bucket_call(client, bucket, date_time):
                     temp_dict.append(dict_holder)
                 return temp_dict
     except Exception as e:
-        print("server.py: line 177:", e)
+        print("server.py: line 157:", e)
         return
 
 
