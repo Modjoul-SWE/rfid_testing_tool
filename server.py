@@ -71,7 +71,12 @@ def search_time():
             time = str(time).zfill(2)
             date_time = date_start + '_' + time
             try:
-                bucket_data = s3_bucket_call(client=client, bucket=bucket, date_time=date_time)
+
+                if account == 'dev':
+                    bucket_data = dev_bucket_call(client=client, bucket=bucket, date_time=date_time)
+                else:
+                    bucket_data = s3_bucket_call(client=client, bucket=bucket, date_time=date_time)
+
                 if bucket_data != None and bucket == os.getenv("PROD_BUCKET_NAME"):
                     total_dict.extend(bucket_data)
                 elif bucket_data != None and bucket == os.getenv("PROD_NON_WHITELISTED_BUCKET_NAME"):
@@ -83,6 +88,7 @@ def search_time():
             except:
                 continue
     if len(total_dict) != 0:
+        # print(total_dict)
         return render_template('/table.html', total_dict=total_dict)
     else:
         return redirect("/")
@@ -117,7 +123,7 @@ def s3_bucket_call(client, bucket, date_time):
         # print(date_time)
         # print(client.list_objects(Bucket=bucket))
         for resp in client.list_objects(Bucket=bucket, Prefix=date_time)['Contents']:
-            dict_holder = {}
+            
             print("Initial success")
             file_name = client.get_object(
                 Bucket=bucket,
@@ -126,15 +132,11 @@ def s3_bucket_call(client, bucket, date_time):
             file_body = file_name['Body'].read().decode('utf-8')
             my_dict = json.loads(file_body)[0]
             flat = flatdict.FlatDict(my_dict)
-            
+            # print(flat)
 
             # for val in range(len(flat[payload])):
             if bucket == os.getenv("PROD_NON_WHITELISTED_BUCKET_NAME"):
-                for key, val in flat.items():
-                    if key not in dict_holder:
-                        dict_holder[key] = val
-                return dict_holder
-            elif bucket == os.getenv("DEV_NON_WHITELISTED_BUCKET_NAME"):
+                dict_holder = {}
                 for key, val in flat.items():
                     if key not in dict_holder:
                         dict_holder[key] = val
@@ -143,6 +145,7 @@ def s3_bucket_call(client, bucket, date_time):
                 temp_dict = []
                 payload = "payload:data"
                 for val in range(len(flat[payload])):
+                    dict_holder = {}
                     for k,v in flat.items():
                         if k not in dict_holder:
                             if k == payload:
@@ -154,6 +157,54 @@ def s3_bucket_call(client, bucket, date_time):
                 return temp_dict
     except Exception as e:
         print("server.py: line 157:", e)
+        return
+
+
+def dev_bucket_call(client, bucket, date_time):
+    try:
+        # print(client)
+        # print(bucket) 
+        # print(date_time)
+        # print(client.list_objects(Bucket=bucket))
+        for resp in client.list_objects(Bucket=bucket, Prefix=("MIDDLEWARE TEST/" + date_time))['Contents']:
+            
+            print("Initial success")
+            file_name = client.get_object(
+                Bucket=bucket,
+                Key=resp['Key']
+                )
+            file_body = file_name['Body'].read().decode('utf-8')
+            my_dict = json.loads(file_body)[0]
+            flat = flatdict.FlatDict(my_dict)
+            # print(flat)
+
+            # for val in range(len(flat[payload])):
+            if bucket == os.getenv("DEV_NON_WHITELISTED_BUCKET_NAME"):
+                dict_holder = {}
+                for key, val in flat.items():
+                    if key not in dict_holder:
+                        dict_holder[key] = val
+                return dict_holder
+            else:
+                temp_list = []
+                payload = "payload:data"
+                for val in range(len(flat[payload])):
+                    dict_holder = {}
+                    for k,v in flat.items():
+                        # print(k)
+                        # print(v)
+                        if k not in dict_holder:
+                            if k == payload:
+                                for i,j in flat[payload][val].items():
+                                    dict_holder[i] = j
+                                    # print("line 197: " + str(dict_holder))
+                                continue
+                            dict_holder[k] = v
+                            # print(dict_holder)   
+                    temp_list.append(dict_holder)
+                return temp_list
+    except Exception as e:
+        print("server.py: line 203:", e)
         return
 
 
