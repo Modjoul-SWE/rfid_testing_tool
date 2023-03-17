@@ -43,32 +43,28 @@
         </nav>
         <p></p>
         <!-- Potential Search Bar Solution -->
-        <div class="input-group">
-            <div class="input-group-prepend">
-                <span class="input-group-text" for="search">Search:</label>
+        <!-- <div class="input-group"> -->
+            <!-- <div class="form-group">
+                <input type="text" class="form-control" id="search" placeholder="Search...">
             </div>
-            <input type="text" class="form-control" id="search">
-            <div class="col-sm-3">
-                <button class="btn btn-primary" id="clear">Clear</button>
-            </div>
-        </div>
+            <button class="btn btn-primary" id="search-button">Search</button> -->
+        <!-- </div> -->
         <table 
             class="table custom-table" 
             data-toggle="table" 
             data-sortable="true"
+            data-search="true"
             data-filter-control="true"
             data-show-export="true"
             data-toolbar="#toolbar">
             <thead>
                 <tr>
                     {% for key in total_dict[0].keys() %}
-                        {% set filter_list = [] %}
                         <th 
-                            data-sortable="true"
                             data-field={{key}}
                             data-filter-control="input"
-                            scope="col"
-                            data-search="true">{{key}}
+                            data-sortable="true"
+                            scope="col">{{key}}
                         </th>
                     {% endfor %}
                 </tr>
@@ -84,29 +80,5 @@
             </tbody>
         </table>
 
-        <script>
-            $(document).ready(function() {
-                // Get the table and rows
-                var table = $('table');
-                var rows = $('tbody tr');
-
-                // Set up the event listener for the search field
-                $('#search').on('keyup', function() {
-                    var val = $.trim($(this).val()).toLowerCase();
-
-                    // Hide all the rows except those that match the search query
-                    rows.show().filter(function() {
-                    var text = $(this).text().toLowerCase();
-                    return !~text.indexOf(val);
-                    }).hide();
-                });
-
-                // Set up the event listener for the clear button
-                $('#clear').on('click', function() {
-                    $('#search').val('');
-                    rows.show();
-                });
-                });
-        </script>
     </body>
 </html>
